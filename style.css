@@ -1,0 +1,541 @@
+/* Estilos Netflix-like */
+
+/* Variáveis CSS para cores do tema */
+:root {
+  --bg-gradient: radial-gradient(circle at 22% 20%, rgba(228, 16, 16, 0.2), transparent 45%), linear-gradient(180deg, #12030a 0%, #0b0207 40%, #080104 100%);
+  --text-color: #f3f3f3;
+  --profile-shadow: rgba(107, 3, 3, 0.45);
+  --image-border: rgb(196, 194, 194);
+  --image-shadow: rgba(255, 255, 255, 0.15);
+}
+
+/* Modo claro */
+.light-mode {
+  --bg-gradient: linear-gradient(180deg, #ffffff 0%, #f0f0f0 40%, #e0e0e0 100%);
+  --text-color: #030303;
+  --profile-shadow: rgba(0, 0, 0, 0.2);
+  --image-border: white;
+  --image-shadow: rgba(25, 73, 228, 0.808);
+}
+
+/* Modo escuro (padrão) */
+.dark-mode {
+  --bg-gradient: radial-gradient(circle at 22% 20%, rgba(228, 16, 16, 0.2), transparent 45%), linear-gradient(180deg, #12030a 0%, #0b0207 40%, #080104 100%);
+  --text-color: #f3f3f3;
+  --profile-shadow: rgba(107, 3, 3, 0.45);
+  --image-border: rgb(196, 194, 194);
+  --image-shadow: rgba(114, 3, 3, 0.308);
+}
+
+/* Reset de margens, paddings e box-sizing para todos os elementos */
+* {
+  margin: 0;
+  /* Remove margem padrão de todos os elementos */
+  padding: 0;
+  /* Remove padding padrão de todos os elementos */
+  box-sizing: border-box;
+  /* Inclui padding e border na largura/altura total do elemento */
+}
+
+/* Estilos para html e body: fundo gradiente, fonte e cores */
+html,
+body {
+  width: 100%;
+  /* Largura total da tela */
+  height: 100%;
+  /* Altura total da tela */
+  margin: 0;
+  /* Remove margem externa */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* Família de fontes moderna */
+  background: var(--bg-gradient);
+  /* Fundo gradiente usando variável */
+  color: var(--text-color);
+  /* Cor do texto usando variável */
+}
+
+/* Estilos específicos para body: layout flexível e padding */
+body {
+  min-height: 100%;
+  /* Altura mínima total da tela */
+  display: flex;
+  /* Usa flexbox para layout */
+  align-items: center;
+  /* Centraliza verticalmente */
+  justify-content: center;
+  /* Centraliza horizontalmente */
+  padding: 2rem;
+  /* Espaçamento interno de 2rem */
+  background: transparent;
+  /* Fundo transparente para herdar do html */
+}
+
+/* Estilos para main: container principal */
+main {
+  width: min(1000px, 95%);
+  /* Largura máxima de 1000px ou 95% da tela */
+  text-align: center;
+  /* Alinha texto ao centro */
+  position: relative;
+  /* Para posicionar o botão de toggle */
+}
+
+/* Estilos para h1: título principal */
+h1 {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  /* Tamanho de fonte responsivo */
+  color: var(--text-color);
+  /* Cor branca usando variável */
+  margin-bottom: 1.8rem;
+  /* Margem inferior */
+  letter-spacing: 0.03em;
+  /* Espaçamento entre letras */
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .65);
+  /* Sombra no texto */
+}
+
+/* Estilos para a section aria-label */
+section[aria-label="Perfis disponíveis"] > ul {
+  list-style: none;
+  /* Remove bullets da lista não ordenada */
+  margin: 0;
+  /* Remove margem padrão */
+  padding: 0;
+  /* Remove padding padrão */
+  display: flex;
+  /* Usa flexbox para centralizar */
+  justify-content: center;
+  /* Centraliza */
+}
+
+/* Estilos para li dentro da ul de perfis */
+section[aria-label="Perfis disponíveis"] > ul > li {
+  margin: 0;
+  /* Remove margem */
+  padding: 0;
+  /* Remove padding */
+  width: 100%;
+  /* Ocupa toda a largura */
+}
+
+/* Estilos para .profiles: container dos perfis */
+.profiles {
+  background: transparent;
+  /* Fundo transparente */
+  border: none;
+  /* Sem borda */
+  border-radius: 0;
+  /* Sem arredondamento */
+  padding: 1.2rem 0.5rem 0.8rem;
+  /* Padding interno */
+  box-shadow: none;
+  /* Sem sombra */
+  display: flex;
+  /* Layout flexível */
+  gap: 1rem;
+  /* Espaço entre itens */
+  justify-content: center;
+  /* Centraliza horizontalmente */
+  align-items: flex-start;
+  /* Alinha ao topo */
+  flex-wrap: wrap;
+  /* Permite quebra de linha para responsividade */
+  list-style: none;
+  /* Remove bullets da lista */
+  margin: 0;
+  /* Remove margem padrão da lista */
+}
+
+/* Estilos para li dentro de .profiles */
+.profiles li {
+  margin: 0;
+  /* Remove margem padrão do item de lista */
+  padding: 0;
+  /* Remove padding padrão do item de lista */
+}
+
+/* Estilos para .profile: cada perfil individual */
+.profile {
+  min-width: 160px;
+  /* Largura mínima */
+  width: 160px;
+  /* Largura fixa */
+  text-decoration: none;
+  /* Remove decoração de link */
+  border-radius: 8px;
+  /* Arredondamento das bordas */
+  overflow: hidden;
+  /* Esconde overflow */
+  background: transparent;
+  /* Fundo transparente */
+  border: none;
+  /* Sem borda */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  /* Transições suaves */
+  cursor: pointer;
+  /* Cursor de ponteiro */
+}
+
+/* Estilos para .profile no hover e focus */
+.profile:hover,
+.profile:focus-within {
+  transform: translateY(-2px);
+  /* Move para cima levemente */
+  box-shadow: 0 8px 20px var(--profile-shadow);
+  /* Sombra vermelha escura usando variável */
+}
+
+/* Estilos para figure dentro de .profile */
+.profile figure {
+  display: flex;
+  /* Layout flexível */
+  flex-direction: column;
+  /* Direção coluna */
+  align-items: center;
+  /* Centraliza horizontalmente */
+  margin: 0;
+  /* Sem margem */
+  padding: 0.8rem 0.5rem 1rem;
+  /* Padding interno */
+}
+
+/* Estilos para img dentro de .profile */
+.profile img {
+  width: 80%;
+  /* Largura de 80% do container */
+  max-width: 120px;
+  /* Largura máxima */
+  display: block;
+  /* Exibe como bloco */
+  border-radius: 8px;
+  /* Arredondamento */
+  aspect-ratio: 1 / 1;
+  /* Proporção quadrada */
+  object-fit: cover;
+  /* Cobre o espaço sem distorcer */
+  border: none;
+  /* Sem borda */
+  box-shadow: none;
+  /* Sem sombra */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  /* Transições */
+}
+
+/* Estilos para img no hover e focus */
+.profile:hover img,
+.profile:focus-within img,
+.profile img:hover {
+  border: 2px solid var(--image-border);
+  /* Borda branca fina usando variável */
+  box-shadow: 0 6px 14px var(--image-shadow);
+  /* Sombra branca suave usando variável */
+}
+
+/* Estilos para figcaption dentro de .profile */
+.profile figcaption {
+  margin-top: 0.6rem;
+  /* Margem superior */
+  color: var(--text-color);
+  /* Cor cinza clara usando variável */
+  font-size: 1.125rem;
+  /* Tamanho da fonte */
+  font-weight: 700;
+  /* Peso da fonte */
+  text-align: center;
+  /* Alinhamento central */
+}
+
+/* Estilos para p dentro de .profile (se usado) */
+.profile p {
+  color: var(--text-color);
+  /* Cor cinza clara usando variável */
+  background: transparent;
+  /* Fundo transparente */
+  padding: 0.65rem 0;
+  /* Padding vertical */
+  font-size: 0.95rem;
+  /* Tamanho da fonte */
+  font-weight: 700;
+  /* Peso da fonte */
+}
+
+/* Estilos para o botão de toggle de tema */
+#theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 999;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.9rem;
+  padding: 0.3rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  /* Remove arredondamento para não parecer "bola" */
+}
+
+#theme-toggle:hover {
+  transform: scale(1.2);
+  /* Apenas aumenta o ícone no hover */
+}
+
+/* Media query para telas menores que 700px */
+@media (max-width: 700px) {
+
+  /* Ajustes para .profile-list (não usado atualmente) */
+  .profile-list {
+    gap: 0.75rem;
+    /* Espaço menor entre itens */
+  }
+
+  /* Ajustes para .profile */
+  .profile {
+    width: 130px;
+    /* Largura menor */
+  }
+
+  /* Ajustes para h1 */
+  h1 {
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    /* Tamanho menor responsivo */
+  }
+}
+
+/* Media query para dispositivos móveis pequenos (até 480px) */
+/* Esta media query ajusta o layout para telas muito pequenas, como smartphones antigos ou em modo retrato, reduzindo ainda mais os tamanhos para melhor usabilidade */
+@media (max-width: 480px) {
+
+  /* Ajustes para body: reduz padding para telas pequenas */
+  body {
+    padding: 1rem;
+    /* Padding menor para economizar espaço */
+  }
+
+  /* Ajustes para main: largura total para telas pequenas */
+  main {
+    width: 100%;
+    /* Usa toda a largura disponível */
+  }
+
+  /* Ajustes para h1: fonte ainda menor */
+  h1 {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    /* Tamanho ainda menor para caber melhor */
+    margin-bottom: 1.5rem;
+    /* Margem inferior reduzida */
+  }
+
+  /* Ajustes para .profiles: gap menor e padding reduzido */
+  .profiles {
+    gap: 0.5rem;
+    /* Espaço ainda menor entre perfis */
+    padding: 1rem 0.3rem 0.6rem;
+    /* Padding reduzido */
+  }
+
+  /* Ajustes para .profile: largura ainda menor */
+  .profile {
+    min-width: 120px;
+    /* Largura mínima reduzida */
+    width: 120px;
+    /* Largura fixa menor */
+  }
+
+  /* Ajustes para img dentro de .profile: tamanho menor */
+  .profile img {
+    width: 70%;
+    /* Largura menor da imagem */
+    max-width: 100px;
+    /* Máximo menor */
+  }
+
+  /* Ajustes para figcaption: fonte menor */
+  .profile figcaption {
+    font-size: 0.95rem;
+    /* Fonte menor para economizar espaço */
+    margin-top: 0.4rem;
+    /* Margem superior menor */
+  }
+}
+
+/* Media query para tablets (481px a 1024px) */
+/* Esta media query otimiza o layout para tablets, mantendo boa legibilidade e usabilidade, com ajustes intermediários entre mobile e desktop */
+@media (min-width: 481px) and (max-width: 1024px) {
+
+  /* Ajustes para body: padding intermediário */
+  body {
+    padding: 1.5rem;
+    /* Padding médio */
+  }
+
+  /* Ajustes para main: largura ajustada para tablets */
+  main {
+    width: min(900px, 90%);
+    /* Largura máxima menor que desktop */
+  }
+
+  /* Ajustes para h1: tamanho médio */
+  h1 {
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    /* Tamanho médio responsivo */
+    margin-bottom: 2rem;
+    /* Margem maior */
+  }
+
+  /* Ajustes para .profiles: gap e padding ajustados */
+  .profiles {
+    gap: 0.8rem;
+    /* Espaço médio entre perfis */
+    padding: 1.2rem 0.4rem 0.8rem;
+    /* Padding médio */
+  }
+
+  /* Ajustes para .profile: largura média */
+  .profile {
+    min-width: 140px;
+    /* Largura mínima média */
+    width: 140px;
+    /* Largura fixa média */
+  }
+
+  /* Ajustes para img dentro de .profile: tamanho médio */
+  .profile img {
+    width: 90%;
+    /* Largura média da imagem */
+    max-width: 110px;
+    /* Máximo médio */
+  }
+
+  /* Ajustes para figcaption: fonte média */
+  .profile figcaption {
+    font-size: 1.5rem;
+    /* Fonte média */
+    margin-top: 0.5rem;
+    /* Margem média */
+  }
+}
+
+/* Media query específica para telas de 912px a 1024px (tablets em paisagem e desktops pequenos) */
+/* Esta media query otimiza para dispositivos como iPad Pro em paisagem, Surface Pro, etc., onde os perfis estavam muito pequenos */
+@media (min-width: 912px) and (max-width: 1024px) {
+
+  /* Ajustes para body: padding ajustado */
+  body {
+    padding: 2rem;
+    /* Padding maior para aproveitar espaço */
+  }
+
+  /* Ajustes para main: largura maior */
+  main {
+    width: min(1000px, 95%);
+    /* Largura máxima maior */
+  }
+
+  /* Ajustes para h1: tamanho maior */
+  h1 {
+    font-size: clamp(2.2rem, 3.5vw, 2.8rem);
+    /* Tamanho maior responsivo */
+    margin-bottom: 2.2rem;
+    /* Margem maior */
+  }
+
+  /* Ajustes para .profiles: gap maior e mais perfis visíveis */
+  .profiles {
+    gap: 1.2rem;
+    /* Espaço maior entre perfis */
+    padding: 1.4rem 0.6rem 1rem;
+    /* Padding maior */
+    justify-content: center;
+    /* Centraliza */
+  }
+
+  /* Ajustes para .profile: largura maior */
+  .profile {
+    min-width: 170px;
+    /* Largura mínima maior */
+    width: 170px;
+    /* Largura fixa maior */
+  }
+
+  /* Ajustes para img dentro de .profile: tamanho maior */
+  .profile img {
+    width: 100%;
+    /* Largura maior da imagem */
+    max-width: 130px;
+    /* Máximo maior */
+  }
+
+  /* Ajustes para figcaption: fonte maior */
+  .profile figcaption {
+    font-size: 1.85rem;
+    /* Fonte maior para legibilidade */
+    margin-top: 0.6rem;
+    /* Margem maior */
+  }
+}
+
+/* Media query para desktops grandes (acima de 1024px) */
+/* Esta media query otimiza para telas grandes, como monitores de desktop, permitindo mais espaço e elementos maiores para melhor experiência visual */
+@media (min-width: 1025px) {
+
+  /* Ajustes para body: padding maior para telas grandes */
+  body {
+    padding: 3rem;
+    /* Padding maior para aproveitar espaço */
+  }
+
+  /* Ajustes para main: largura máxima para desktops */
+  main {
+    width: min(1200px, 95%);
+    /* Largura maior para telas grandes */
+  }
+
+  /* Ajustes para h1: tamanho maior */
+  h1 {
+    font-size: clamp(2.5rem, 3.5vw, 3.5rem);
+    /* Tamanho maior para impacto */
+    margin-bottom: 2.5rem;
+    /* Margem maior */
+  }
+
+  /* Ajustes para .profiles: gap maior e mais perfis visíveis */
+  .profiles {
+    gap: 1.5rem;
+    /* Espaço maior entre perfis */
+    padding: 1.5rem 0.8rem 1rem;
+    /* Padding maior */
+    justify-content: center;
+    /* Centraliza */
+  }
+
+  /* Ajustes para .profile: largura maior */
+  .profile {
+    min-width: 180px;
+    /* Largura mínima maior */
+    width: 180px;
+    /* Largura fixa maior */
+  }
+
+  /* Ajustes para img dentro de .profile: tamanho maior */
+  .profile img {
+    width: 85%;
+    /* Largura maior da imagem */
+    max-width: 140px;
+    /* Máximo maior */
+  }
+
+  /* Ajustes para figcaption: fonte maior */
+  .profile figcaption {
+    font-size: 1rem;
+    /* Fonte maior para legibilidade */
+    margin-top: 0.7rem;
+    /* Margem maior */
+  }
+}
